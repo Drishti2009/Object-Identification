@@ -1,0 +1,62 @@
+<html>
+<head>
+
+	<title>Living Room</title>
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+  
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="rooms.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap" rel="stylesheet">
+</head>
+<body background="bg.jpg">
+    <center> 
+        <h1 class="text-capetalise heading">Object Detection</h1>
+        <a href="" class="btn btn-black " id="back_button">Back</a>
+        <br><br>
+        <h2 class="btn btn-danger" id="status">Status: </h3>
+        <br><br>
+        <h2 class="btn btn-success" id="record">Record: </h4>
+        <br>
+    </center>
+</body>
+<script>
+    objectDetector = "";
+    img = "";
+    status = "";
+
+    function preload(){
+        img = loadImage("living.html");
+    }
+
+    function setup(){
+        canvas = createCanvas(640, 420);
+        canvas.center();
+
+        objectDetector = ml5.objectDetector('cocossd', modelLoaded);
+        document.getElementById("status").innerHTML = "Status = Detecting Objects";
+    }
+
+    function modelLoaded(){
+        console.log("Model Loaded!!!!");
+        status = true;
+        objectDetector.detect(img, gotResults);
+    }
+
+    function gotResults(error, results){
+        if(error){
+            console.log(error);
+        }
+        console.log(results);
+    }
+</script>
+</html>
